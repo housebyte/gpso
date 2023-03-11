@@ -8,6 +8,7 @@ double func6(double* pos,int dim);
 double func7(double* pos,int dim);
 double func8(double* pos,int dim);
 double func9(double* pos,int dim);
+double func11(double* pos,int dim);
 
 double getlrand(double upper,double lower);
 

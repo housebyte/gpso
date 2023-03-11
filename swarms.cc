@@ -221,7 +221,7 @@ double t0,t1;
 t0 = sin(pos[0])*cos(pos[1]);
 t1 = exp(abs(1-sqrt(pow(pos[0],2)+pow(pos[1],2))/M_PI));
 
-return -abs(t0*t1);
+return -abs(t0*t1)+5.5;
 
 }
 
@@ -248,13 +248,15 @@ return ((double) rand()/ RAND_MAX) * (upper-lower) + lower;
 
 double func6(double* pos,int dim){
 
-/*Egg Holder - Note:too big for graph*/
+/*Egg Holder - Note:too big for graph -now fits!!*/
 double t0,t1,t2,t3,t4;
+t3 = pos[0]*50;
+t4 = pos[1]*10;
 
-t0 = -pos[0]*sin(sqrt(abs(pos[0]-(pos[1]+47))));
-t1 = -(pos[1]+47)*sin(sqrt(abs((pos[0]/2)+(pos[1]+47))));
+t0 = -t3*sin(sqrt(abs(t3-(t4+47))));
+t1 = -(t4+47)*sin(sqrt(abs((t3/2)+(t4+47))));
 
-return t0 + t1;
+return 5.5+(t0 + t1)/70;
 }
 
 double func7(double* pos,int dim){
@@ -290,5 +292,16 @@ t2 = pow((pos[1]-1),2)*(1+pow(sin(2*M_PI*pos[1]),2));
 return t0+t1+t2;
 }
 
+double func11(double* pos,int dim){
 
+/*Goldstein-Price*/
+double t0,t1,t2,t3;
+t2 = pos[0]/20;
+t3 = pos[1]/40;
+
+t0 = 1+pow((t2+t3+1),2)*(19-14*t2+3*pow(t2,2)-14*t3+6*t2*t3+3*pow(t3,2));
+t1 = 30+pow((2*t2-3*t3),2)*(18-32*t2+12*pow(t2,2)+48*t3-36*t2*t3+27*pow(t3,2));
+
+return -17.5+(t0*t1)/70;
+}
 

@@ -13,4 +13,4 @@ Install :
 
 g++ -o gpso glutpso.cc swarms.cc -lopengl32 -lfreeglut -lglu32   
 
-Use Right Click Menu to control gpso
+Use Right Click Menu to control gpso - press RESET to cycle through some Test Functions

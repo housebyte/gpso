@@ -32,10 +32,13 @@ swarm myswarm(14,3);
 
 double gsize=1;	    //Problem size
 double hgt=1,scl=1,pscl=1;   //Position
+double isx=0,isy=0,isz=0;	//Scale
 int res=10.0;		//Resolution
 int lowres=1;
 double scrn = 50;		//Screen size
 #define MAX_PLANES 14
+int idx=0;
+char mydata[100];
 
 struct {
   float speed;          /* zero speed means not flying */
@@ -207,7 +210,7 @@ void reshape(int w, int h)
 
 /* Rescale and resize Globally */
 
-glScalef(scl*6.0 / 3.7, scl*6.0 / 3.7, scl*6.0 / 3.7);
+glScalef(scl*(10.0+isx) / 3.7, scl*(6.0+isy) / 3.7, scl*(6.0+isz) / 3.7);
 glTranslatef(0.0,hgt,0.0);
 glRotatef(310,1.0,0.0,0.0);
 glRotatef(65,0.0,0.0,1.0);
@@ -383,6 +386,7 @@ keyboard(unsigned char ch, int x, int y)
 #define MOTION_ON	3
 #define MOTION_OFF	4
 #define QUIT		5
+#define RESET       7
 #define INCREASE_LRT    6
 
 void
@@ -411,16 +415,34 @@ menu(int item)
   case QUIT:
     exit(0);
     break;
+  case RESET:
+    idx++;
+	if(idx==1){
+    myswarm.initialise(0.64,0.6,0.55,0.75,10,-10,func4);
+	}
+	if(idx==2){
+	myswarm.initialise(0.64,0.6,0.55,0.75,10,-10,func6);
+	}
+	if(idx==3){
+	myswarm.initialise(0.64,0.6,0.55,0.75,10,-10,func11);
+	}
+	if(idx==4){
+	idx=0;
+	}
+    loadpoints();
+	drawlines2buffer();
+	glutPostRedisplay();
+	break;	
   }
 }
 
 int
 main(int argc, char *argv[])
 {
-hgt = 7.5;scl =2;pscl=1;gsize = 1;
+hgt = 0;scl =3;pscl=1;gsize = 1;
 res = 10;lowres=1;scrn=75;
 
-myswarm.initialise(0.64,0.6,0.55,0.75,10,-10,func4);
+myswarm.initialise(0.64,0.6,0.55,0.75,10,-10,func11);
 
   glutInit(&argc, argv);
   /* use multisampling if available */
@@ -439,6 +461,7 @@ glutKeyboardFunc(keyboard);
   glutAddMenuEntry("Motion", MOTION_ON);
   glutAddMenuEntry("Inc Lrt", INCREASE_LRT);
   glutAddMenuEntry("Quit", QUIT);
+  glutAddMenuEntry("Reset", RESET);
   glutAttachMenu(GLUT_RIGHT_BUTTON);
   /* setup OpenGL state */
   glClearDepth(1.0);
